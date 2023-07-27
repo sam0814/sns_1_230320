@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.common.FileManagerService;
+import com.sns.post.dao.PostMapper;
 import com.sns.post.dao.PostRepository;
 import com.sns.post.entity.PostEntity;
 
 @Service
 public class PostBO {
+	
+	@Autowired
+	private PostMapper postMapper;
 
 	@Autowired
 	private PostRepository postRepository; // JPA 
@@ -38,4 +42,20 @@ public class PostBO {
 				.imagePath(imagePath)
 				.build());
 	}
+	
+	public PostEntity deletePostByUserId(int userId,String userLoginId, String content, MultipartFile file) {
+		String imagePath = null;
+		
+		if (file != null) {
+			imagePath = fileManager.saveFile(userLoginId, file);
+		}
+		
+		return postRepository.delete(
+				PostEntity.builder()
+				.userId(userId)
+				.content(content)
+				.imagePath(imagePath)
+				.build());
+	}
 }
+

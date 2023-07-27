@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.post.bo.PostBO;
+import com.sns.post.dao.PostMapper;
 
 @RequestMapping("/post")
 @RestController
 public class PostRestController {
-
+	
 	@Autowired
 	private PostBO postBO;
 	
@@ -43,5 +45,20 @@ public class PostRestController {
 		result.put("code", 1);
 		result.put("result", "성공");
 		return result;
+	}
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> delete(
+			@RequestParam("postId") int postId,
+			HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		// postBO
+		postBO
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 1);
+		result.put("result", "성공");
 	}
 }
